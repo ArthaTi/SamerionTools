@@ -25,6 +25,12 @@ func _init(type: String, variantSeed: int) -> void:
 	# Assign properties
 	self.type = type
 
+	# Add subnodes
+	var side := Sprite.new()
+	side.name = "Side"
+	side.centered = false
+	add_child(side)
+
 	# Generate variants
 	generate_variants(variantSeed)
 
@@ -128,7 +134,7 @@ func set_height(val: float):
 
 func update_position():
 
-	position = target_size * (map_position + Vector2(0, height))
+	position = target_size * (map_position + Vector2(0, height/2))
 
 func update_area():
 
@@ -154,7 +160,12 @@ func is_pressed():
 
 func generate_variants(variantSeed: int):
 
+	# Main texture
 	texture = PackLoader.load_tile(type, "tile", variantSeed)
 
 	# Scale to fit target size
 	scale = Vector2(target_size, target_size) / texture.get_size()
+
+	# Load the side's texture
+	$Side.texture = PackLoader.load_tile(type, "side", variantSeed + 1)
+	$Side.position = Vector2(0, target_size) / scale
