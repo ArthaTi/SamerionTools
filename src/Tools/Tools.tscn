@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/Tools/Tools.gd" type="Script" id=1]
+[ext_resource path="res://src/Tools/Select.gd" type="Script" id=2]
+[ext_resource path="res://src/Tools/Paint.gd" type="Script" id=3]
+[ext_resource path="res://src/Tools/Edit.gd" type="Script" id=4]
+
+[sub_resource type="InputEventKey" id=1]
+scancode = 65
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="ButtonGroup" id=3]
+
+[sub_resource type="InputEventKey" id=4]
+scancode = 83
+
+[sub_resource type="ShortCut" id=5]
+shortcut = SubResource( 4 )
+
+[node name="Tools" type="HBoxContainer"]
+margin_left = 1182.0
+margin_right = 1345.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paint" type="Button" parent="."]
+margin_right = 44.0
+margin_bottom = 24.0
+toggle_mode = true
+pressed = true
+shortcut = SubResource( 2 )
+group = SubResource( 3 )
+text = "Paint"
+script = ExtResource( 3 )
+
+[node name="Select" type="Button" parent="."]
+margin_left = 48.0
+margin_right = 99.0
+margin_bottom = 24.0
+toggle_mode = true
+shortcut = SubResource( 5 )
+group = SubResource( 3 )
+text = "Select"
+script = ExtResource( 2 )
+
+[node name="Edit" type="Button" parent="."]
+margin_left = 103.0
+margin_right = 139.0
+margin_bottom = 24.0
+hint_tooltip = "Hold (alt) while painting"
+toggle_mode = true
+group = SubResource( 3 )
+text = "Edit"
+script = ExtResource( 4 )
