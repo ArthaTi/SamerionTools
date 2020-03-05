@@ -1,6 +1,17 @@
 extends "res://src/Tools/Tool.gd"
 
+var active_state = false
+
 func _process(delta: float) -> void:
+
+	# Check if the tool active state changed
+	var active_now = is_active()
+
+	# Ignore if it didn't
+	if active_state == active_now: return
+
+	# Update the status
+	active_state = active_now
 
 	# Disable zoom if there are any selected tiles
 	EditorApi.camera_control.zoom_enabled = (
@@ -23,7 +34,7 @@ func _input(event: InputEvent) -> void:
 		for cell in get_tree().get_nodes_in_group("selected"):
 
 			# Update height
-			cell.height += 0.1 if event.button_index == BUTTON_WHEEL_DOWN else -0.1
+			cell.height += -0.1 if event.button_index == BUTTON_WHEEL_DOWN else 0.1
 
 func is_active():
 

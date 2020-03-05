@@ -10,12 +10,15 @@ const neighbor_positions = [
 
 var type: String
 var map_position: Vector2 setget set_map_position
-var height: float setget set_height
+var height: float = 1 setget set_height
 var variant: int
 var decoration: int
 
 var object: String
 var objectSpawner: String
+
+var side: Sprite
+var side_repeat: Sprite
 
 func _init(type: String, variantSeed: int) -> void:
 
@@ -25,14 +28,25 @@ func _init(type: String, variantSeed: int) -> void:
 	# Assign properties
 	self.type = type
 
-	# Add subnodes
-	var side := Sprite.new()
+	# Add the Side subnode
+	side = Sprite.new()
 	side.name = "Side"
 	side.centered = false
 	add_child(side)
 
+	# Add the SideRepeat subnode
+	side_repeat = Sprite.new()
+	side_repeat.name = "SideRepeat"
+	side_repeat.centered = false
+	add_child(side_repeat)
+
 	# Generate variants
 	generate_variants(variantSeed)
+
+# When assigned to a tree
+func _ready() -> void:
+
+	update_position()
 
 # TODO: instead of bruting through inputs, add a mapping of height-corrected coords somewhere
 func _input(event: InputEvent) -> void:
@@ -134,7 +148,34 @@ func set_height(val: float):
 
 func update_position():
 
-	position = target_size * (map_position + Vector2(0, height/2))
+	position = target_size * (map_position - Vector2(0, height/2))
+	z_index = map_position.y
+
+	# If assigned to an area
+	if get_parent():
+
+		# Update the side
+		update_side()
+
+		# Update the side of the cell in behind
+		var backTile = get_parent().get_tile(map_position - Vector2(0, 1))
+		if backTile: backTile.update_side()
+
+func update_side():
+
+	# Get the tile in front of this one
+	var frontTile = get_parent().get_tile(map_position + Vector2(0, 1))
+	var frontTileHeight = frontTile.height if frontTile else height
+
+	# Get texture ratio of the side
+	var textureSize = side.texture.get_size()
+	var textureRatio = textureSize.y / textureSize.x
+
+	# Set the repeat box to match that texture
+	side_repeat.region_rect = Rect2(
+		0, 0,  # I have no idea why that "/2" at the end is necessary, it really shouldn't
+		textureSize.x, textureSize.y * max(0, height/2 - frontTileHeight/2 - textureRatio) / 2
+	)
 
 func update_area():
 
@@ -167,5 +208,22 @@ func generate_variants(variantSeed: int):
 	scale = Vector2(target_size, target_size) / texture.get_size()
 
 	# Load the side's texture
-	$Side.texture = PackLoader.load_tile(type, "side", variantSeed + 1)
-	$Side.position = Vector2(0, target_size) / scale
+	var sideTexture = PackLoader.load_tile(type, "side", variantSeed + 1)
+	side.texture = sideTexture
+	side.position = Vector2(0, target_size) / scale
+
+	# Crop the image
+	var textureSize = sideTexture.get_size()
+	var textureRatio = textureSize.y / textureSize.x
+	var image: Image = sideTexture.get_data().get_rect(Rect2(
+		0, textureSize.y - textureSize.x,
+		textureSize.x, textureSize.x
+	))
+	var croppedTexture := ImageTexture.new()
+	croppedTexture.create_from_image(image)
+	croppedTexture.flags = side.texture.flags | Texture.FLAG_REPEAT
+
+	# Load the sideRepeat texture
+	side_repeat.texture = croppedTexture
+	side_repeat.position = Vector2(0, target_size * (1 + textureRatio)) / scale
+	side_repeat.region_enabled = true

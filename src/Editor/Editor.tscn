@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/Editor/Menu.gd" type="Script" id=1]
 [ext_resource path="res://src/Editor/Tabs.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://src/Editor/ZoomSlider.gd" type="Script" id=5]
 [ext_resource path="res://src/Tools/Tools.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Editor/Selection.gd" type="Script" id=7]
+[ext_resource path="res://src/Editor/NewTiles.gd" type="Script" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
@@ -388,27 +389,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Selected" type="PanelContainer" parent="UI/Wrapper/Menus"]
+[node name="SelectedTiles" type="PanelContainer" parent="UI/Wrapper/Menus"]
 margin_right = 211.0
 margin_bottom = 186.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/Selected"]
+[node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/SelectedTiles"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 201.0
 margin_bottom = 176.0
 custom_constants/separation = 15
 
-[node name="Label" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper"]
+[node name="Label" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper"]
 margin_right = 191.0
 margin_bottom = 14.0
 text = "Selected tile"
 align = 1
 
-[node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/Selected/Wrapper"]
+[node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper"]
 margin_top = 29.0
 margin_right = 191.0
 margin_bottom = 117.0
@@ -418,12 +419,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TileLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="TileLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_right = 117.0
 margin_bottom = 14.0
 text = "Tile"
 
-[node name="Tile" type="LineEdit" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="Tile" type="LineEdit" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_left = 127.0
 margin_right = 191.0
 margin_bottom = 15.0
@@ -431,13 +432,13 @@ size_flags_horizontal = 3
 text = "grass"
 caret_blink = true
 
-[node name="TileVariantLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="TileVariantLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_top = 19.0
 margin_right = 117.0
 margin_bottom = 33.0
 text = "Tile variant"
 
-[node name="TileVariant" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="TileVariant" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_left = 127.0
 margin_top = 19.0
 margin_right = 191.0
@@ -447,20 +448,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DecorationLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="DecorationLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_top = 37.0
 margin_right = 117.0
 margin_bottom = 51.0
 text = "Decoration variant"
 
-[node name="Decoration" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="Decoration" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_left = 127.0
 margin_top = 37.0
 margin_right = 191.0
 margin_bottom = 51.0
 text = "1"
 
-[node name="ObjectVariantLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="ObjectVariantLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_top = 55.0
 margin_right = 117.0
 margin_bottom = 69.0
@@ -469,7 +470,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DecorationLabel3" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="DecorationLabel3" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_left = 127.0
 margin_top = 55.0
 margin_right = 191.0
@@ -479,13 +480,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HeightLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="HeightLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_top = 73.0
 margin_right = 117.0
 margin_bottom = 87.0
 text = "Height"
 
-[node name="Height" type="SpinBox" parent="UI/Wrapper/Menus/Selected/Wrapper/Tile"]
+[node name="Height" type="SpinBox" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
 margin_left = 127.0
 margin_top = 73.0
 margin_right = 191.0
@@ -496,7 +497,7 @@ step = 0.1
 allow_greater = true
 allow_lesser = true
 
-[node name="Object" type="GridContainer" parent="UI/Wrapper/Menus/Selected/Wrapper"]
+[node name="Object" type="GridContainer" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper"]
 margin_top = 132.0
 margin_right = 191.0
 margin_bottom = 166.0
@@ -505,25 +506,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ObjectLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Object"]
+[node name="ObjectLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
 margin_right = 53.0
 margin_bottom = 14.0
 text = "Object"
 
-[node name="Object" type="LineEdit" parent="UI/Wrapper/Menus/Selected/Wrapper/Object"]
+[node name="Object" type="LineEdit" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
 margin_left = 57.0
 margin_right = 191.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="SpawnerLabel" type="Label" parent="UI/Wrapper/Menus/Selected/Wrapper/Object"]
+[node name="SpawnerLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
 margin_top = 19.0
 margin_right = 53.0
 margin_bottom = 33.0
 text = "Spawner"
 
-[node name="Spawner" type="LineEdit" parent="UI/Wrapper/Menus/Selected/Wrapper/Object"]
+[node name="Spawner" type="LineEdit" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
 margin_left = 57.0
 margin_top = 19.0
 margin_right = 191.0
@@ -531,29 +532,30 @@ margin_bottom = 34.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="New" type="PanelContainer" parent="UI/Wrapper/Menus"]
+[node name="NewTiles" type="PanelContainer" parent="UI/Wrapper/Menus"]
 margin_top = 190.0
 margin_right = 211.0
 margin_bottom = 340.0
 grow_horizontal = 0
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/New"]
+[node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/NewTiles"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 201.0
 margin_bottom = 140.0
 custom_constants/separation = 15
 
-[node name="Label" type="Label" parent="UI/Wrapper/Menus/New/Wrapper"]
+[node name="Label" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
 margin_right = 191.0
 margin_bottom = 14.0
 text = "New tiles"
 align = 1
 
-[node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/New/Wrapper"]
+[node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
 margin_top = 29.0
 margin_right = 191.0
 margin_bottom = 81.0
@@ -563,24 +565,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PreviewLabel" type="Label" parent="UI/Wrapper/Menus/New/Wrapper/Tile"]
+[node name="PreviewLabel" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_right = 50.0
 margin_bottom = 14.0
 text = "Preview"
 
-[node name="Preview" type="TextureRect" parent="UI/Wrapper/Menus/New/Wrapper/Tile"]
+[node name="Preview" type="TextureRect" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_left = 60.0
 margin_right = 191.0
 margin_bottom = 14.0
 stretch_mode = 6
 
-[node name="TileLabel2" type="Label" parent="UI/Wrapper/Menus/New/Wrapper/Tile"]
+[node name="TileLabel2" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_top = 18.0
 margin_right = 50.0
 margin_bottom = 32.0
 text = "Tile"
 
-[node name="Tile" type="LineEdit" parent="UI/Wrapper/Menus/New/Wrapper/Tile"]
+[node name="Tile" type="LineEdit" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_left = 60.0
 margin_top = 18.0
 margin_right = 191.0
@@ -589,13 +591,13 @@ size_flags_horizontal = 3
 text = "grass"
 caret_blink = true
 
-[node name="HeightLabel" type="Label" parent="UI/Wrapper/Menus/New/Wrapper/Tile"]
+[node name="HeightLabel" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_top = 37.0
 margin_right = 50.0
 margin_bottom = 51.0
 text = "Height"
 
-[node name="Height" type="SpinBox" parent="UI/Wrapper/Menus/New/Wrapper/Tile"]
+[node name="Height" type="SpinBox" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_left = 60.0
 margin_top = 37.0
 margin_right = 191.0
@@ -606,7 +608,7 @@ step = 0.1
 allow_greater = true
 allow_lesser = true
 
-[node name="Object" type="GridContainer" parent="UI/Wrapper/Menus/New/Wrapper"]
+[node name="Object" type="GridContainer" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
 margin_top = 96.0
 margin_right = 191.0
 margin_bottom = 130.0
@@ -615,25 +617,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ObjectLabel" type="Label" parent="UI/Wrapper/Menus/New/Wrapper/Object"]
+[node name="ObjectLabel" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Object"]
 margin_right = 53.0
 margin_bottom = 14.0
 text = "Object"
 
-[node name="Object" type="LineEdit" parent="UI/Wrapper/Menus/New/Wrapper/Object"]
+[node name="Object" type="LineEdit" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Object"]
 margin_left = 57.0
 margin_right = 191.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="SpawnerLabel" type="Label" parent="UI/Wrapper/Menus/New/Wrapper/Object"]
+[node name="SpawnerLabel" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Object"]
 margin_top = 19.0
 margin_right = 53.0
 margin_bottom = 33.0
 text = "Spawner"
 
-[node name="Spawner" type="LineEdit" parent="UI/Wrapper/Menus/New/Wrapper/Object"]
+[node name="Spawner" type="LineEdit" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Object"]
 margin_left = 57.0
 margin_top = 19.0
 margin_right = 191.0
