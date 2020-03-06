@@ -17,6 +17,7 @@ var decoration: int
 var object: String
 var objectSpawner: String
 
+var height_label: Label
 var side: Sprite
 var side_repeat: Sprite
 
@@ -27,6 +28,18 @@ func _init(type: String, variantSeed: int) -> void:
 
 	# Assign properties
 	self.type = type
+
+	# Add the height label
+	height_label = Label.new()
+	height_label.name = "HeightLabel"
+	height_label.rect_size = Vector2(target_size, target_size)
+	height_label.hide()
+	height_label.align = Label.ALIGN_CENTER
+	height_label.valign = Label.VALIGN_CENTER
+	height_label.set("custom_colors/font_color", Color.white)
+	height_label.set("custom_colors/font_color_shadow", Color(0, 0, 0, 0.5))
+	height_label.set("custom_constants/shadow_as_outline", true)
+	add_child(height_label)
 
 	# Add the Side subnode
 	side = Sprite.new()
@@ -49,7 +62,7 @@ func _ready() -> void:
 	update_position()
 
 # TODO: instead of bruting through inputs, add a mapping of height-corrected coords somewhere
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 
 	# Filter: Clicked or released a button somewhere
 	if not event is InputEventMouseButton: return
@@ -146,6 +159,9 @@ func set_height(val: float):
 	# Set actual position
 	update_position()
 
+	# Update height label
+	height_label.text = str(val)
+
 func update_position():
 
 	position = target_size * (map_position - Vector2(0, height/2))
@@ -201,11 +217,20 @@ func is_pressed():
 
 func generate_variants(variantSeed: int):
 
-	# Main texture
-	texture = PackLoader.load_tile(type, "tile", variantSeed)
+	# Get the main texture
+	var new_texture = PackLoader.load_tile(type, "tile", variantSeed)
+
+	# If the tile doesn't exist, ignore it
+	if new_texture == null: return
+
+	# Assign the texture
+	texture = new_texture
 
 	# Scale to fit target size
 	scale = Vector2(target_size, target_size) / texture.get_size()
+
+	# Set height label scale
+	height_label.rect_scale = Vector2(1, 1) / scale
 
 	# Load the side's texture
 	var sideTexture = PackLoader.load_tile(type, "side", variantSeed + 1)

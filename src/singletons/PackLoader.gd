@@ -13,11 +13,11 @@ func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 		# Attempt to load set texture from the pack
 		var texture = _load_texture("%s/%s/%s/%s.png" % [pack, tile, type, 1])
 
-		# Set flags
-		texture.flags = pack_flags[pack]
-
 		# Succeeded
 		if texture != null:
+
+			# Set flags
+			texture.flags = pack_flags[pack]
 
 			# Return the texture
 			return texture
@@ -25,6 +25,10 @@ func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 	return null
 
 func _load_texture(path):
+
+	# Check if the file exists
+	var file := File.new()
+	if not file.file_exists(path): return null
 
 	# Create the image and load the fil;e
 	var img = Image.new()

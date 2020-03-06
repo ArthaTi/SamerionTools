@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 		or not get_tree().get_nodes_in_group("selected").size()
 	)
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 
 	# Ignore if this tool isn't active
 	if not is_active(): return

@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 		# Change camera position accordingly
 		position = move_from - get_local_mouse_position()
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 
 	# Ignore if not focused
 	if not focused(): return

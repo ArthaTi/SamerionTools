@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/Editor/Menu.gd" type="Script" id=1]
 [ext_resource path="res://src/Editor/Tabs.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/Tools/Tools.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Editor/Selection.gd" type="Script" id=7]
 [ext_resource path="res://src/Editor/NewTiles.gd" type="Script" id=8]
+[ext_resource path="res://src/Editor/StatusBar.gd" type="Script" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
@@ -330,6 +331,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -0.902527
 margin_right = -0.902588
+mouse_filter = 2
 theme = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -547,6 +549,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 201.0
 margin_bottom = 140.0
+mouse_filter = 2
 custom_constants/separation = 15
 
 [node name="Label" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
@@ -701,6 +704,13 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 1355.0
 margin_bottom = 34.0
+script = ExtResource( 9 )
+
+[node name="PaintPosition" type="Label" parent="UI/Wrapper/Status bar/Wrapper"]
+margin_top = 5.0
+margin_right = 32.0
+margin_bottom = 19.0
+text = "(0, 0)"
 
 [node name="ZoomSlider" type="HSlider" parent="UI/Wrapper/Status bar/Wrapper"]
 margin_left = 1164.0

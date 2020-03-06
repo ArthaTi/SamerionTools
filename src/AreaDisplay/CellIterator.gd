@@ -17,7 +17,10 @@ func in_progress():
 
 func _iter_init(_arg):
 
-	current = rect.position
+	current = rect.position - Vector2(0, 1)
+
+	# Go to the next node
+	_iter_next("")
 
 	return in_progress()
 
@@ -48,6 +51,6 @@ func _iter_next(_arg):
 
 	return in_progress()
 
-func _iter_get(_arg):
+func _iter_get(_arg) -> Cell:
 
 	return area.get_tile(current)

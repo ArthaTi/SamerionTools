@@ -17,11 +17,6 @@ func set_map(setMap: Map):
 
 	map = setMap
 
-	set_tile(Vector2(0, 0), "grass")
-	set_tile(Vector2(0, 1), "grass")
-	set_tile(Vector2(1, 0), "grass")
-	set_tile(Vector2(1, 1), "grass")
-
 func get_tile(pos: Vector2):
 
 	# Return the tile
@@ -41,7 +36,7 @@ func set_tile(pos: Vector2, tile: String, height: float = 1):
 func import_cell(cell):
 
 	# If there's already a tile at given position
-	if cell.map_position in coords:
+	if cell.map_position in coords and coords[cell.map_position]:
 
 		# Remove the old cell
 		coords[cell.map_position].queue_free()
@@ -57,3 +52,15 @@ func import_cell(cell):
 	size.position.y = min(size.position.y, cell.map_position.y)
 	size.end.x = max(size.end.x, cell.map_position.x + 1)
 	size.end.y = max(size.end.y, cell.map_position.y + 1)
+
+func reset_cell(pos: Vector2):
+
+	# If there's a tile at this position
+	if pos in coords and coords[pos]:
+
+		# Remove it
+		coords[pos].queue_free()
+		coords.erase(pos)
+
+	# Reset the value
+	coords[pos] = null

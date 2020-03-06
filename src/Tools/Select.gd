@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 			$"/root/Editor".get_global_mouse_position() - select_begin_precise
 		)
 
-func _input(event: InputEvent):
+func _unhandled_input(event: InputEvent):
 
 	# Left mouse button is up
 	if (event is InputEventMouseButton

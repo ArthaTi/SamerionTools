@@ -4,14 +4,17 @@ const Cell = preload("res://src/AreaDisplay/Cell.gd")
 
 var preview_cell: Cell
 var last_position  # null if not holding
+var is_pressed := false
+var erase := false
 
-signal preview_cell_changed
+signal preview_cell_updated
 
 func _ready():
 
 	preview_cell = Cell.new("grass", 0)
 	preview_cell.name = "PreviewCell"
 	preview_cell.modulate = Color(0, 0.53, 0.67, 0.9)
+	preview_cell.height_label.show()
 	EditorApi.area_display.add_child(preview_cell)
 
 func _process(delta: float) -> void:
@@ -22,28 +25,69 @@ func _process(delta: float) -> void:
 	# Change preview_cell visiblity based on that
 	preview_cell.visible = active
 
+	if not active: return
+
 	# Set preview_cell position
 	preview_cell.map_position = (
-		EditorApi.area_display.get_local_mouse_position()
+		$"/root/Editor".get_global_mouse_position()
 		/ preview_cell.target_size
-		+ Vector2(0, preview_cell.height / 2).floor()
+		+ Vector2(0, preview_cell.height / 2)
 	).floor()
 	preview_cell.z_index += 1
 
 	# If position changed
-	if preview_cell.map_position != last_position and Input.is_mouse_button_pressed(BUTTON_LEFT):
+	if preview_cell.map_position != last_position:
 
-		# Place the tile
-		EditorApi.area_display.set_tile(
-			preview_cell.map_position,
-			preview_cell.type,
-			preview_cell.height
-		)
+		last_position = preview_cell.map_position
+
+		emit_signal("preview_cell_updated")
+
+		# Get previously labeled cells
+		for cell in get_tree().get_nodes_in_group("labeled"):
+
+			# Hide them
+			cell.height_label.hide()
+
+			# Remove from the group
+			cell.remove_from_group("labeled")
+
+		# Enable height labels on neighbor tiles
+		for cell in CellIterator.new(
+			EditorApi.area_display,
+			Rect2(preview_cell.map_position - Vector2(1, 1), Vector2(2, 2))
+		):
+
+			# Show them
+			cell.height_label.show()
+
+			# Mark as labeled
+			cell.add_to_group("labeled")
+
+		# If pressing the left button
+		if is_pressed:
+
+			# Painting
+			if not erase:
+
+				# Place the tile
+				EditorApi.area_display.set_tile(
+					preview_cell.map_position,
+					preview_cell.type,
+					preview_cell.height
+				)
+
+			# Erasing
+			else:
+
+				# Remove the tile
+				EditorApi.area_display.reset_cell(
+					preview_cell.map_position
+				)
 
 	# Toggle zoom based on (alt) state
 	EditorApi.camera_control.zoom_enabled = not Input.is_key_pressed(KEY_ALT)
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 
 	# Enable changing height of target tile
 	if event is InputEventMouseButton:
@@ -58,20 +102,29 @@ func _input(event: InputEvent) -> void:
 
 					# Go up
 					preview_cell.height += 0.1
-					continue
+					emit_signal("preview_cell_updated")
 
 				# Scrolling down
 				BUTTON_WHEEL_DOWN:
 
 					# Go down
 					preview_cell.height -= 0.1
-					continue
+					emit_signal("preview_cell_updated")
 
-		# Paint tile
-		if event.button_index == BUTTON_LEFT:
+		# Painting tiles
+		else:
 
-			# No matter if just pushed or released, nullify last position
-			last_position = null
+			# Pressed left or right button
+			if event.button_index == BUTTON_LEFT or event.button_index == BUTTON_RIGHT:
+
+				# Set mode
+				erase = event.button_index == BUTTON_RIGHT
+
+				# No matter if just pushed or released, nullify last position
+				last_position = null
+
+				# Set if pressed or not
+				is_pressed = event.is_pressed()
 
 func input(event: InputEventMouseButton, pos: Vector2):
 
