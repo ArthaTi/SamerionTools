@@ -61,11 +61,14 @@ func _ready() -> void:
 
 	update_position()
 
-# TODO: instead of bruting through inputs, add a mapping of height-corrected coords somewhere
+# TODO: instead of bruting through cells, add a mapping of height-corrected coords somewhere
 func _unhandled_input(event: InputEvent) -> void:
 
-	# Filter: Clicked or released a button somewhere
+	# If clicked or released a button somewhere
 	if not event is InputEventMouseButton: return
+
+	# As long as this cell is still in the tree
+	if get_parent() == null: return
 
 	# Check if the event is in the bounding box of this cell
 	if get_rect().has_point(get_global_mouse_position()):
@@ -125,17 +128,21 @@ func toggle_selection():
 	if is_in_group("selected"):
 
 		# Unselect it
-		remove_from_group("selected")
+		select(false)
 
 	# And select it if it isn't
-	else: add_to_group("selected")
+	else: select(true)
 
 	# Refresh it
 	update_area()
 
-func select():
+func select(value := true):
 
-	add_to_group("selected")
+	if value:
+		add_to_group("selected")
+	else:
+		remove_from_group("selected")
+
 	update_area()
 
 func relative_tile(relative_pos: Vector2):
@@ -179,6 +186,9 @@ func update_position():
 
 func update_side():
 
+	# If the side texture isn't present
+	if not side.texture: return
+
 	# Get the tile in front of this one
 	var frontTile = get_parent().get_tile(map_position + Vector2(0, 1))
 	var frontTileHeight = frontTile.height if frontTile else height
@@ -220,8 +230,19 @@ func generate_variants(variantSeed: int):
 	# Get the main texture
 	var new_texture = PackLoader.load_tile(type, "tile", variantSeed)
 
-	# If the tile doesn't exist, ignore it
-	if new_texture == null: return
+	# If the tile doesn't exist
+	if new_texture == null:
+
+		# If there is no texture set at all
+		if texture == null:
+
+			# Mark as missing
+			add_to_group("missing")
+
+		# Ignore it
+		return
+
+	remove_from_group("missing")
 
 	# Assign the texture
 	texture = new_texture

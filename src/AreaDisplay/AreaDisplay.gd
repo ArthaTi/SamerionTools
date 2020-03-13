@@ -38,8 +38,11 @@ func import_cell(cell):
 	# If there's already a tile at given position
 	if cell.map_position in coords and coords[cell.map_position]:
 
+		var old = coords[cell.map_position]
+
 		# Remove the old cell
-		coords[cell.map_position].queue_free()
+		remove_child(old)
+		old.queue_free()
 
 	# Set the position
 	coords[cell.map_position] = cell

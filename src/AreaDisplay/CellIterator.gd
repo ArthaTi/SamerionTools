@@ -17,16 +17,14 @@ func in_progress():
 
 func _iter_init(_arg):
 
-	current = rect.position - Vector2(0, 1)
+	current = rect.position
 
-	# Go to the next node
-	_iter_next("")
+	# Check for nulls at the start
+	_iter_next("", false)
 
 	return in_progress()
 
-func _iter_next(_arg):
-
-	var start = true
+func _iter_next(_arg, start=true):
 
 	while start or area.get_tile(current) == null:
 

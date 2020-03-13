@@ -24,6 +24,9 @@ func input(_text = ""):
 	# Update textures
 	preview.generate_variants(0)
 
+	# Update tile preview
+	$Wrapper/Tile/Preview.texture = preview.texture
+
 func updated():
 
 	# Check if type changed

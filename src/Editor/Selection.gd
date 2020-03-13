@@ -14,8 +14,6 @@ func _draw():
 
 	if not rect: return
 
-	prints(rect)
-
 	# Draw background
 	draw_rect(
 		rect,

@@ -16,6 +16,7 @@ func _ready():
 	preview_cell.modulate = Color(0, 0.53, 0.67, 0.9)
 	preview_cell.height_label.show()
 	EditorApi.area_display.add_child(preview_cell)
+	preview_cell.set_process_unhandled_input(false)
 
 func _process(delta: float) -> void:
 
@@ -24,8 +25,6 @@ func _process(delta: float) -> void:
 
 	# Change preview_cell visiblity based on that
 	preview_cell.visible = active
-
-	if not active: return
 
 	# Set preview_cell position
 	preview_cell.map_position = (
@@ -64,7 +63,10 @@ func _process(delta: float) -> void:
 			cell.add_to_group("labeled")
 
 		# If pressing the left button
-		if is_pressed:
+		if (
+			active and is_pressed
+			and not Input.is_key_pressed(KEY_SHIFT) and not Input.is_key_pressed(KEY_CONTROL)
+		):
 
 			# Painting
 			if not erase:
@@ -84,6 +86,8 @@ func _process(delta: float) -> void:
 					preview_cell.map_position
 				)
 
+	if not active: return
+
 	# Toggle zoom based on (alt) state
 	EditorApi.camera_control.zoom_enabled = not Input.is_key_pressed(KEY_ALT)
 
@@ -94,6 +98,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		# Changing height of target tile
 		if event.alt:
+
+			if not event.is_pressed(): return
 
 			match event.button_index:
 

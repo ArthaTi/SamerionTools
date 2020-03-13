@@ -8,6 +8,25 @@ var select_begin_precise
 # Enable selection via input_select() without modifiers, used in the select tool
 var main_selection = false
 
+func _process(delta: float) -> void:
+
+	if select_begin_precise:
+
+		EditorApi.selection.rect = Rect2(
+			select_begin_precise,
+			$"/root/Editor".get_global_mouse_position() - select_begin_precise
+		)
+
+func _unhandled_input(event: InputEvent):
+
+	# Left mouse button is up
+	if (event is InputEventMouseButton
+		and event.button_index == BUTTON_LEFT
+		and not event.is_pressed()):
+
+		select_begin_precise = null
+		EditorApi.selection.rect = Rect2()
+
 func input(event: InputEventMouseButton, pos: Vector2): pass
 
 func input_select(event: InputEventMouseButton, pos: Vector2):
@@ -55,7 +74,7 @@ func input_select(event: InputEventMouseButton, pos: Vector2):
 				if event.shift and not event.control: clear_selection()
 
 				# Select the rect
-				for cell in CellIterator.new(EditorApi.area_display, Rect2(min_coords, max_coords)):
+				for cell in CellIterator.new(EditorApi.area_display, Rect2(min_coords, max_coords - min_coords)):
 
 					# If shift is pressed, select the cell
 					if event.shift: cell.select()
