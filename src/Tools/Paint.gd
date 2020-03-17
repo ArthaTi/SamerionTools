@@ -11,12 +11,13 @@ signal preview_cell_updated
 
 func _ready():
 
-	preview_cell = Cell.new("grass", 0)
+	preview_cell = Cell.new("", 0)
 	preview_cell.name = "PreviewCell"
 	preview_cell.modulate = Color(0, 0.53, 0.67, 0.9)
 	preview_cell.height_label.show()
 	EditorApi.area_display.add_child(preview_cell)
 	preview_cell.set_process_unhandled_input(false)
+	PackLoader.connect("pack_loaded", self, "pack_loaded")
 
 func _process(delta: float) -> void:
 
@@ -131,6 +132,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 				# Set if pressed or not
 				is_pressed = event.is_pressed()
+
+func pack_loaded(_path: String):
+
+	emit_signal("preview_cell_updated")
 
 func input(event: InputEventMouseButton, pos: Vector2):
 

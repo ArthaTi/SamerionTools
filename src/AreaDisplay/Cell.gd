@@ -242,7 +242,9 @@ func generate_variants(variantSeed: int):
 		# Ignore it
 		return
 
-	remove_from_group("missing")
+	# It's no longer missing!
+	if is_in_group("missing"):
+		remove_from_group("missing")
 
 	# Assign the texture
 	texture = new_texture

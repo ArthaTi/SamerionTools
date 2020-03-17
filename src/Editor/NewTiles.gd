@@ -3,6 +3,7 @@ extends PanelContainer
 const Cell = preload("res://src/AreaDisplay/Cell.gd")
 
 onready var paint = EditorApi.tools.get_node("Paint")
+onready var preview := paint.preview_cell as Cell
 
 func _ready() -> void:
 
@@ -14,9 +15,6 @@ func _ready() -> void:
 	paint.connect("preview_cell_updated", self, "updated")
 
 func input(_text = ""):
-
-	# Get the preview cell
-	var preview := paint.preview_cell as Cell
 
 	preview.type = $Wrapper/Tile/Tile.text
 	preview.height = $Wrapper/Tile/Height.value
@@ -32,6 +30,10 @@ func updated():
 	# Check if type changed
 	if $Wrapper/Tile/Tile.text != paint.preview_cell.type:
 		$Wrapper/Tile/Tile.text = paint.preview_cell.type
+
+	# Check if texture changed
+	if $Wrapper/Tile/Preview.texture != preview.texture:
+		$Wrapper/Tile/Preview.texture = preview.texture
 
 	# Check if height changed
 	if $Wrapper/Tile/Height.value != paint.preview_cell.height:

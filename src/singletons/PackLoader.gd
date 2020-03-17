@@ -3,6 +3,8 @@ extends Node
 var packs := []
 var pack_flags := {}
 
+signal pack_loaded(path)
+
 func _process(delta: float) -> void:
 
 	# Get missing tiles
@@ -17,7 +19,19 @@ func _process(delta: float) -> void:
 
 	else:
 
-		EditorApi.status_bar.remove_warning("missing")
+		EditorApi.status_bar.remove_warning("missing-tile")
+
+func add_pack(location: String) -> void:
+
+	# Add the pack to list
+	packs.append(location)
+
+	# Reload missing textures
+	for node in get_tree().get_nodes_in_group("missing"):
+		node.generate_variants(0)
+
+	# Emit a signal
+	emit_signal("pack_loaded", location)
 
 func list_tiles(from_pack = null) -> Array:
 
@@ -55,12 +69,15 @@ func list_tiles(from_pack = null) -> Array:
 			# Ignore files
 			if not dir.current_is_dir(): continue
 
+			# Ignore hidden folders
+			if file.begins_with("."): continue
+
 			# Add the file to the result
 			result.append(file)
 
 		dir.list_dir_end()
 
-		return []
+		return result
 
 func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 
@@ -72,9 +89,6 @@ func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 
 		# Succeeded
 		if texture != null:
-
-			# Set flags
-			texture.flags = pack_flags[pack]
 
 			# Return the texture
 			return texture
