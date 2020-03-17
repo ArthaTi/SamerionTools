@@ -4,7 +4,14 @@ func _ready() -> void:
 
 	$Packs.connect("pressed", self, "open_pack_manager")
 
+	PackLoader.connect("list_changed", self, "list_changed")
 	PackLoader.connect("pack_loaded", self, "load_pack")
+
+	# Load packs
+	list_changed()
+	for pack in PackLoader.packs:
+
+		load_pack(pack)
 
 func open_pack_manager() -> void:
 
@@ -12,6 +19,14 @@ func open_pack_manager() -> void:
 
 	pack_manager.show()
 	pack_manager.grab_focus()
+
+func list_changed(_path = ""):
+
+	var tiles = $ScrollContainer/Tile
+
+	for child in tiles.get_children():
+
+		tiles.remove_child(child)
 
 func load_pack(path: String):
 

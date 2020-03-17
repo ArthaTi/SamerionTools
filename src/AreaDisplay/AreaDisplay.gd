@@ -22,7 +22,7 @@ func get_tile(pos: Vector2):
 	# Return the tile
 	return coords[pos] if pos in coords else null
 
-func set_tile(pos: Vector2, tile: String, height: float = 1):
+func set_tile(pos: Vector2, tile: String, height: float = 1) -> Cell:
 
 	# Create the cell
 	var cell = Cell.new(tile, map.variant_seed + ((size.end.x-size.position.x)*pos.y + pos.x)*2)
@@ -32,6 +32,8 @@ func set_tile(pos: Vector2, tile: String, height: float = 1):
 	cell.map_position = pos
 
 	import_cell(cell)
+
+	return cell
 
 func import_cell(cell):
 

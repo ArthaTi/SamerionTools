@@ -106,160 +106,16 @@ script = ExtResource( 2 )
 
 [node name="Menus" type="VBoxContainer" parent="UI/Wrapper"]
 margin_top = 48.0
-margin_right = 211.0
-margin_bottom = 605.0
+margin_right = 180.0
+margin_bottom = 454.0
 size_flags_horizontal = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SelectedTiles" type="PanelContainer" parent="UI/Wrapper/Menus"]
-margin_right = 211.0
-margin_bottom = 186.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/SelectedTiles"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 201.0
-margin_bottom = 176.0
-custom_constants/separation = 15
-
-[node name="Label" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper"]
-margin_right = 191.0
-margin_bottom = 14.0
-text = "Selected tile"
-align = 1
-
-[node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper"]
-margin_top = 29.0
-margin_right = 191.0
-margin_bottom = 117.0
-custom_constants/hseparation = 10
-columns = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TileLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_right = 117.0
-margin_bottom = 14.0
-text = "Tile"
-
-[node name="Tile" type="LineEdit" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_left = 127.0
-margin_right = 191.0
-margin_bottom = 15.0
-size_flags_horizontal = 3
-text = "grass"
-caret_blink = true
-
-[node name="TileVariantLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_top = 19.0
-margin_right = 117.0
-margin_bottom = 33.0
-text = "Tile variant"
-
-[node name="TileVariant" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_left = 127.0
-margin_top = 19.0
-margin_right = 191.0
-margin_bottom = 33.0
-text = "2"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DecorationLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_top = 37.0
-margin_right = 117.0
-margin_bottom = 51.0
-text = "Decoration variant"
-
-[node name="Decoration" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_left = 127.0
-margin_top = 37.0
-margin_right = 191.0
-margin_bottom = 51.0
-text = "1"
-
-[node name="ObjectVariantLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_top = 55.0
-margin_right = 117.0
-margin_bottom = 69.0
-text = "Object variant"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DecorationLabel3" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_left = 127.0
-margin_top = 55.0
-margin_right = 191.0
-margin_bottom = 69.0
-text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HeightLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_top = 73.0
-margin_right = 117.0
-margin_bottom = 87.0
-text = "Height"
-
-[node name="Height" type="SpinBox" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Tile"]
-margin_left = 127.0
-margin_top = 73.0
-margin_right = 191.0
-margin_bottom = 88.0
-size_flags_horizontal = 3
-min_value = -100.0
-step = 0.1
-allow_greater = true
-allow_lesser = true
-
-[node name="Object" type="GridContainer" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper"]
-margin_top = 132.0
-margin_right = 191.0
-margin_bottom = 166.0
-columns = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ObjectLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
-margin_right = 53.0
-margin_bottom = 14.0
-text = "Object"
-
-[node name="Object" type="LineEdit" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
-margin_left = 57.0
-margin_right = 191.0
-margin_bottom = 15.0
-size_flags_horizontal = 3
-caret_blink = true
-
-[node name="SpawnerLabel" type="Label" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
-margin_top = 19.0
-margin_right = 53.0
-margin_bottom = 33.0
-text = "Spawner"
-
-[node name="Spawner" type="LineEdit" parent="UI/Wrapper/Menus/SelectedTiles/Wrapper/Object"]
-margin_left = 57.0
-margin_top = 19.0
-margin_right = 191.0
-margin_bottom = 34.0
-size_flags_horizontal = 3
-caret_blink = true
-
 [node name="NewTiles" type="PanelContainer" parent="UI/Wrapper/Menus"]
-margin_top = 190.0
-margin_right = 211.0
-margin_bottom = 340.0
+margin_right = 180.0
+margin_bottom = 189.0
 grow_horizontal = 0
 script = ExtResource( 8 )
 __meta__ = {
@@ -269,20 +125,20 @@ __meta__ = {
 [node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/NewTiles"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 201.0
-margin_bottom = 140.0
+margin_right = 170.0
+margin_bottom = 179.0
 mouse_filter = 2
 custom_constants/separation = 15
 
 [node name="Label" type="Label" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 14.0
 text = "New tiles"
 align = 1
 
 [node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
 margin_top = 29.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 81.0
 custom_constants/hseparation = 10
 columns = 2
@@ -297,7 +153,7 @@ text = "Preview"
 
 [node name="Preview" type="TextureRect" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_left = 60.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 14.0
 stretch_mode = 6
 
@@ -310,7 +166,7 @@ text = "Tile"
 [node name="Tile" type="LineEdit" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_left = 60.0
 margin_top = 18.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 caret_blink = true
@@ -324,7 +180,7 @@ text = "Height"
 [node name="Height" type="SpinBox" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Tile"]
 margin_left = 60.0
 margin_top = 37.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 min_value = -100.0
@@ -334,7 +190,7 @@ allow_lesser = true
 
 [node name="Object" type="GridContainer" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
 margin_top = 96.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 130.0
 columns = 2
 __meta__ = {
@@ -348,7 +204,7 @@ text = "Object"
 
 [node name="Object" type="LineEdit" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Object"]
 margin_left = 57.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 caret_blink = true
@@ -362,16 +218,23 @@ text = "Spawner"
 [node name="Spawner" type="LineEdit" parent="UI/Wrapper/Menus/NewTiles/Wrapper/Object"]
 margin_left = 57.0
 margin_top = 19.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
 caret_blink = true
 
+[node name="Apply" type="Button" parent="UI/Wrapper/Menus/NewTiles/Wrapper"]
+margin_top = 145.0
+margin_right = 160.0
+margin_bottom = 169.0
+text = "Apply to selection"
+
 [node name="Pack" type="PanelContainer" parent="UI/Wrapper/Menus"]
-margin_top = 344.0
-margin_right = 211.0
-margin_bottom = 557.0
+margin_top = 193.0
+margin_right = 180.0
+margin_bottom = 406.0
 grow_horizontal = 0
+rect_min_size = Vector2( 180, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -379,20 +242,20 @@ __meta__ = {
 [node name="Wrapper" type="VBoxContainer" parent="UI/Wrapper/Menus/Pack"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 201.0
+margin_right = 170.0
 margin_bottom = 203.0
 custom_constants/separation = 15
 script = ExtResource( 12 )
 
 [node name="Label" type="Label" parent="UI/Wrapper/Menus/Pack/Wrapper"]
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 14.0
 text = "Available tiles"
 align = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Wrapper/Menus/Pack/Wrapper"]
 margin_top = 29.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 154.0
 rect_min_size = Vector2( 0, 125 )
 size_flags_horizontal = 3
@@ -400,7 +263,7 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="Tile" type="GridContainer" parent="UI/Wrapper/Menus/Pack/Wrapper/ScrollContainer"]
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -413,7 +276,7 @@ __meta__ = {
 
 [node name="Packs" type="Button" parent="UI/Wrapper/Menus/Pack/Wrapper"]
 margin_top = 169.0
-margin_right = 191.0
+margin_right = 160.0
 margin_bottom = 193.0
 text = "Change packs"
 
@@ -505,42 +368,71 @@ __meta__ = {
 }
 
 [node name="Buttons" type="VBoxContainer" parent="UI/PackManager/Split"]
-margin_right = 122.0
+margin_right = 165.0
 margin_bottom = 290.0
 
+[node name="CurrentList" type="Label" parent="UI/PackManager/Split/Buttons"]
+margin_right = 165.0
+margin_bottom = 14.0
+autowrap = true
+
+[node name="OpenList" type="Button" parent="UI/PackManager/Split/Buttons"]
+margin_top = 18.0
+margin_right = 165.0
+margin_bottom = 42.0
+text = "Open different"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateList" type="Button" parent="UI/PackManager/Split/Buttons"]
+margin_top = 46.0
+margin_right = 165.0
+margin_bottom = 70.0
+text = "Create new list"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Separator2" type="HSeparator" parent="UI/PackManager/Split/Buttons"]
+margin_top = 74.0
+margin_right = 165.0
+margin_bottom = 89.0
+
 [node name="Add" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_right = 122.0
-margin_bottom = 24.0
+margin_top = 93.0
+margin_right = 165.0
+margin_bottom = 117.0
 text = "Add"
 
 [node name="Separator" type="HSeparator" parent="UI/PackManager/Split/Buttons"]
-margin_top = 28.0
-margin_right = 122.0
-margin_bottom = 32.0
+margin_top = 121.0
+margin_right = 165.0
+margin_bottom = 136.0
 
 [node name="Edit" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_top = 36.0
-margin_right = 122.0
-margin_bottom = 60.0
+margin_top = 140.0
+margin_right = 165.0
+margin_bottom = 164.0
 disabled = true
 text = "Edit"
 
 [node name="Toggle" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_top = 64.0
-margin_right = 122.0
-margin_bottom = 88.0
+margin_top = 168.0
+margin_right = 165.0
+margin_bottom = 192.0
 disabled = true
 text = "Disable"
 
 [node name="Remove" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_top = 92.0
-margin_right = 122.0
-margin_bottom = 116.0
+margin_top = 196.0
+margin_right = 165.0
+margin_bottom = 220.0
 disabled = true
 text = "Remove"
 
 [node name="Packs" type="ItemList" parent="UI/PackManager/Split"]
-margin_left = 134.0
+margin_left = 177.0
 margin_right = 390.0
 margin_bottom = 290.0
 allow_reselect = true
@@ -557,9 +449,9 @@ focus_mode = 2
 theme = ExtResource( 10 )
 window_title = "Open File(s)"
 resizable = true
+mode_overrides_title = false
 mode = 1
 access = 2
-filters = PoolStringArray( "*.json ; Samerion maps" )
 current_dir = "/"
 current_path = "/"
 __meta__ = {

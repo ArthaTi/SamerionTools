@@ -1,9 +1,19 @@
 extends Node
 
+var pack_list = "user://lists/default.json" setget load_list
 var packs := []
-var pack_flags := {}
 
+signal list_changed(path)
 signal pack_loaded(path)
+
+func _ready() -> void:
+
+	var directory := Directory.new()
+
+	if not directory.dir_exists("user://lists/"):
+		directory.make_dir("user://lists/")
+
+	load_list()
 
 func _process(delta: float) -> void:
 
@@ -20,6 +30,51 @@ func _process(delta: float) -> void:
 	else:
 
 		EditorApi.status_bar.remove_warning("missing-tile")
+
+func load_list(path: String = pack_list) -> bool:
+
+	# Assign the pack list
+	pack_list = path
+	emit_signal("list_changed", pack_list)
+
+	# Clear pack list
+	packs.clear()
+
+	var file = File.new()
+
+	# Check if the file exists
+	if not file.file_exists(pack_list): return false
+
+	# Open the file
+	file.open(pack_list, File.READ)
+
+	# Read the data
+	var text = file.get_as_text()
+
+	# Close the file
+	file.close()
+
+	# Parse the content
+	var content = JSON.parse(text).result
+
+	# Get each item
+	for item in content:
+
+		add_pack(item)
+
+	return true
+
+func save_list() -> void:
+
+	# Open the file
+	var file = File.new()
+	file.open(pack_list, File.WRITE)
+
+	# Write the data
+	file.store_string(JSON.print(packs))
+
+	# Close the file
+	file.close()
 
 func add_pack(location: String) -> void:
 

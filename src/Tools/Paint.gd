@@ -73,19 +73,13 @@ func _process(delta: float) -> void:
 			if not erase:
 
 				# Place the tile
-				EditorApi.area_display.set_tile(
-					preview_cell.map_position,
-					preview_cell.type,
-					preview_cell.height
-				)
+				paint_tile(preview_cell.map_position)
 
 			# Erasing
 			else:
 
 				# Remove the tile
-				EditorApi.area_display.reset_cell(
-					preview_cell.map_position
-				)
+				EditorApi.area_display.reset_cell(preview_cell.map_position)
 
 	if not active: return
 
@@ -132,6 +126,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 				# Set if pressed or not
 				is_pressed = event.is_pressed()
+
+func paint_tile(pos: Vector2) -> Cell:
+
+	if not preview_cell.type: return null
+
+	# Place the tile
+	return EditorApi.area_display.set_tile(
+		pos,
+		preview_cell.type,
+		preview_cell.height
+	)
 
 func pack_loaded(_path: String):
 

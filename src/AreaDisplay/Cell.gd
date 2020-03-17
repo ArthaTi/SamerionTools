@@ -61,6 +61,8 @@ func _ready() -> void:
 
 	update_position()
 
+	PackLoader.connect("pack_loaded", self, "generate_variants", [0])
+
 # TODO: instead of bruting through cells, add a mapping of height-corrected coords somewhere
 func _unhandled_input(event: InputEvent) -> void:
 
@@ -82,7 +84,7 @@ func _draw():
 	if not is_in_group("selected"): return
 
 	# Get texture size
-	var texture_size := texture.get_size()
+	var texture_size := Vector2(target_size, target_size) / scale
 
 	# Draw the square
 	draw_rect(
