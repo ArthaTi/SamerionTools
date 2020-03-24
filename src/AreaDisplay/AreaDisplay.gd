@@ -7,8 +7,10 @@ var map: Map setget set_map
 var coords := {}
 var last_id := 0
 var size := Rect2()
+var view_from := 0 setget set_view_from
 
 signal map_changed(newMap)
+signal view_changed(view)
 
 func _ready():
 
@@ -72,3 +74,16 @@ func reset_cell(pos: Vector2):
 
 	# Reset the value
 	coords[pos] = null
+
+func set_view_from(deg: int):
+
+	view_from = deg
+
+	for cell in coords.values():
+
+		if not cell: continue
+
+		# Update position of each cell
+		cell.update_position()
+
+	emit_signal("view_changed", view_from)

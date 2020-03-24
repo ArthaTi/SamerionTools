@@ -173,16 +173,27 @@ func set_height(val: float):
 	# Update height label
 	height_label.text = str(val)
 
+static func transform_position(v: Vector2, by: int):
+
+	match by:
+
+		0: return v
+		1: return Vector2(-v.y, +v.x)
+		2: return Vector2(-v.x, -v.y)
+		3: return Vector2(+v.y, -v.x)
+
 func update_position():
 
-	position = target_size * (map_position - Vector2(0, height/2))
-	z_index = map_position.y
+	var transformed_position = transform_position(map_position, get_parent().view_from if get_parent() else 0)
+
+	position = target_size * (transformed_position - Vector2(0, height/2))
+	z_index = transformed_position.y
 
 	# If assigned to an area
 	if get_parent():
 
-		# Update the side
-		update_side()
+		# Generate variants
+		generate_variants()
 
 		# Update the side of the cell in behind
 		var backTile = get_parent().get_tile(map_position - Vector2(0, 1))
@@ -288,3 +299,6 @@ func generate_variants(_stupid_python=true):
 	side_repeat.texture = croppedTexture
 	side_repeat.position = Vector2(0, target_size * (1 + textureRatio)) / scale
 	side_repeat.region_enabled = true
+
+	# Update the side
+	update_side()

@@ -6,12 +6,14 @@ var move_from := Vector2()
 var zoom_step = 0.1
 var zoom_enabled := true
 var movement_enabled := true
+var perspective = 0
 
 signal zoom_changed(value)
 
 func _ready() -> void:
 
 	EditorApi.camera_control = self
+	EditorApi.area_display.connect("view_changed", self, "change_view")
 
 func _process(delta: float) -> void:
 
@@ -56,6 +58,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		position -= get_local_mouse_position() * (($Camera.zoom - prev)/$Camera.zoom)
 
 		emit_signal("zoom_changed", 1/$Camera.zoom.x)
+
+func change_view(from: int):
+
+	position = Cell.transform_position(position, posmod(from - perspective, 4))
+	perspective = from
 
 func focused() -> bool:
 
