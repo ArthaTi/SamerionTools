@@ -1,12 +1,14 @@
 extends Node2D
 
-const Map = preload("res://src/resources/Map.gd")
-const Cell = preload("res://src/AreaDisplay/Cell.gd")
+const Map = preload("Map.gd")
+const Cell = preload("Cell.gd")
 
 var map: Map setget set_map
 var coords := {}
 var last_id := 0
 var size := Rect2()
+
+signal map_changed(newMap)
 
 func _ready():
 
@@ -16,6 +18,7 @@ func _ready():
 func set_map(setMap: Map):
 
 	map = setMap
+	emit_signal("map_changed", map)
 
 func get_tile(pos: Vector2):
 
@@ -25,7 +28,7 @@ func get_tile(pos: Vector2):
 func set_tile(pos: Vector2, tile: String, height: float = 1) -> Cell:
 
 	# Create the cell
-	var cell = Cell.new(tile, map.variant_seed + ((size.end.x-size.position.x)*pos.y + pos.x)*2)
+	var cell = Cell.new(tile, map.variant_seed)
 	cell.height = height
 
 	# Set the position in the cell

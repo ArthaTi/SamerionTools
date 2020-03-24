@@ -13,6 +13,7 @@ var map_position: Vector2 setget set_map_position
 var height: float = 1 setget set_height
 var variant: int
 var decoration: int
+var variant_seed = 0;
 
 var object: String
 var objectSpawner: String
@@ -28,6 +29,7 @@ func _init(type: String, variantSeed: int) -> void:
 
 	# Assign properties
 	self.type = type
+	self.variant_seed = variantSeed
 
 	# Add the height label
 	height_label = Label.new()
@@ -53,15 +55,15 @@ func _init(type: String, variantSeed: int) -> void:
 	side_repeat.centered = false
 	add_child(side_repeat)
 
-	# Generate variants
-	generate_variants(variantSeed)
-
 # When assigned to a tree
 func _ready() -> void:
 
 	update_position()
 
-	PackLoader.connect("pack_loaded", self, "generate_variants", [0])
+	PackLoader.connect("pack_loaded", self, "generate_variants")
+
+	# Generate variants
+	generate_variants()
 
 # TODO: instead of bruting through cells, add a mapping of height-corrected coords somewhere
 func _unhandled_input(event: InputEvent) -> void:
@@ -227,7 +229,16 @@ func is_pressed():
 
 	return Input.is_mouse_button_pressed(BUTTON_LEFT) and get_rect().has_point(get_local_mouse_position())
 
-func generate_variants(variantSeed: int):
+func generate_variants(_stupid_python=true):
+
+	var AreaDisplay := load("res://src/AreaDisplay/AreaDisplay.gd") as Script
+
+	# Get display size
+	var parent = get_parent()
+	var size = parent.size if AreaDisplay.instance_has(parent) else Rect2()
+
+	# Get the seed
+	var variantSeed = variant_seed + (map_position.y+size.position.y)*82 + (map_position.x + size.position.x)*5
 
 	# Get the main texture
 	var new_texture = PackLoader.load_tile(type, "tile", variantSeed)

@@ -1,6 +1,7 @@
 extends "res://src/Tools/Tool.gd"
 
-const Cell = preload("res://src/AreaDisplay/Cell.gd")
+const Cell = preload("../AreaDisplay/Cell.gd")
+const Map = preload("../AreaDisplay/Map.gd")
 
 var preview_cell: Cell
 var last_position  # null if not holding
@@ -11,13 +12,19 @@ signal preview_cell_updated
 
 func _ready():
 
+	# Load preview cell
 	preview_cell = Cell.new("", 0)
 	preview_cell.name = "PreviewCell"
 	preview_cell.modulate = Color(0, 0.53, 0.67, 0.9)
 	preview_cell.height_label.show()
 	EditorApi.area_display.add_child(preview_cell)
+	EditorApi.area_display.connect("map_changed", self, "map_changed")
 	preview_cell.set_process_unhandled_input(false)
+
+	# Load packs
 	PackLoader.connect("pack_loaded", self, "pack_loaded")
+
+	map_changed(EditorApi.area_display.map)
 
 func _process(delta: float) -> void:
 
@@ -34,6 +41,7 @@ func _process(delta: float) -> void:
 		+ Vector2(0, preview_cell.height / 2)
 	).floor()
 	preview_cell.z_index += 1
+	preview_cell.generate_variants()
 
 	# If position changed
 	if preview_cell.map_position != last_position:
@@ -141,6 +149,12 @@ func paint_tile(pos: Vector2) -> Cell:
 func pack_loaded(_path: String):
 
 	emit_signal("preview_cell_updated")
+
+func map_changed(map):
+
+	preview_cell.variant_seed = (map as Map).variant_seed
+	preview_cell.generate_variants()
+	prints("seed:", (map as Map).variant_seed)
 
 func input(event: InputEventMouseButton, pos: Vector2):
 

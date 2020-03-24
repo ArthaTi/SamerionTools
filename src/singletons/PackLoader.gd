@@ -83,7 +83,7 @@ func add_pack(location: String) -> void:
 
 	# Reload missing textures
 	for node in get_tree().get_nodes_in_group("missing"):
-		node.generate_variants(0)
+		node.generate_variants()
 
 	# Emit a signal
 	emit_signal("pack_loaded", location)
@@ -139,8 +139,41 @@ func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 	# Search for the tile in the packs
 	for pack in packs:
 
+		# Get the directory
+		var dir := Directory.new()
+		var path = "%s/cells/%s/%s" % [pack, tile, type]
+
+		# If the tile doesn't exists, continue to other packs
+		if not dir.dir_exists(path): continue
+
+		# Open the directory
+		dir.open(path)
+
+		var paths := []
+
+		dir.list_dir_begin()
+
+		# List texture paths
+		while true:
+
+			# Start loading textures
+			var file := dir.get_next()
+			if not file: break
+
+			# If the file is a texture
+			if file.ends_with(".png"):
+				paths.append(file)
+
+		dir.list_dir_end()
+
+		var rng := RandomNumberGenerator.new()
+		rng.seed = variantSeed
+
 		# Attempt to load set texture from the pack
-		var texture = _load_texture("%s/cells/%s/%s/%s.png" % [pack, tile, type, 1])
+		var texture = _load_texture("%s/cells/%s/%s/%s" % [
+			pack, tile, type,
+			paths[rng.randi_range(0, paths.size()-1)]
+		])
 
 		# Succeeded
 		if texture != null:

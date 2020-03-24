@@ -80,21 +80,21 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxLine" id=18]
+[sub_resource type="StyleBoxLine" id=6]
 color = Color( 0, 0, 0, 0.6 )
 grow_begin = -10.0
 grow_end = -10.0
 
-[sub_resource type="StyleBoxLine" id=6]
+[sub_resource type="StyleBoxLine" id=7]
 thickness = 2
 
-[sub_resource type="StyleBoxLine" id=7]
+[sub_resource type="StyleBoxLine" id=8]
 color = Color( 0, 0, 0, 0.501961 )
 
-[sub_resource type="StyleBoxFlat" id=16]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 1, 1, 1, 0.25 )
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 1, 1, 1, 0.8 )
 border_width_left = 1
 border_width_top = 1
@@ -102,31 +102,31 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 border_width_bottom = 2
 border_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0, 0, 0, 0 )
 border_width_bottom = 1
 border_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=13]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
 content_margin_bottom = 10.0
 bg_color = Color( 1, 1, 1, 0.75 )
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=14]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
 content_margin_bottom = 10.0
 bg_color = Color( 1, 1, 1, 0.74902 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=15]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
@@ -141,21 +141,21 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=16]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 5.0
 content_margin_bottom = 5.0
 bg_color = Color( 1, 1, 1, 0 )
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=17]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 5.0
 content_margin_bottom = 5.0
 bg_color = Color( 1, 1, 1, 0 )
 
-[sub_resource type="StyleBoxFlat" id=15]
+[sub_resource type="StyleBoxFlat" id=18]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 5.0
@@ -166,7 +166,7 @@ border_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id=17]
+[sub_resource type="StyleBoxFlat" id=19]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
@@ -189,13 +189,13 @@ Button/styles/hover = SubResource( 3 )
 Button/styles/normal = SubResource( 4 )
 Button/styles/pressed = SubResource( 5 )
 HSeparator/constants/separation = 15
-HSeparator/styles/separator = SubResource( 18 )
+HSeparator/styles/separator = SubResource( 6 )
 HSlider/icons/grabber = null
 HSlider/icons/grabber_disabled = null
 HSlider/icons/grabber_highlight = null
 HSlider/icons/tick = null
-HSlider/styles/grabber_area = SubResource( 6 )
-HSlider/styles/slider = SubResource( 7 )
+HSlider/styles/grabber_area = SubResource( 7 )
+HSlider/styles/slider = SubResource( 8 )
 ItemList/colors/font_color = Color( 0, 0, 0, 0.8 )
 ItemList/colors/font_color_selected = Color( 0, 0, 0, 1 )
 ItemList/colors/guide_color = Color( 0, 0, 0, 0.1 )
@@ -204,12 +204,12 @@ ItemList/constants/icon_margin = 4
 ItemList/constants/line_separation = 2
 ItemList/constants/vseparation = 2
 ItemList/fonts/font = null
-ItemList/styles/bg = SubResource( 16 )
-ItemList/styles/bg_focus = SubResource( 16 )
+ItemList/styles/bg = SubResource( 9 )
+ItemList/styles/bg_focus = SubResource( 9 )
 ItemList/styles/cursor = null
 ItemList/styles/cursor_unfocused = null
-ItemList/styles/selected = SubResource( 19 )
-ItemList/styles/selected_focus = SubResource( 19 )
+ItemList/styles/selected = SubResource( 10 )
+ItemList/styles/selected_focus = SubResource( 10 )
 Label/colors/font_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 0.101961, 0.101961, 0.101961, 1 )
@@ -229,8 +229,8 @@ LineEdit/colors/selection_color = Color( 1, 1, 1, 0.4 )
 LineEdit/constants/minimum_spaces = 12
 LineEdit/fonts/font = null
 LineEdit/icons/clear = null
-LineEdit/styles/focus = SubResource( 8 )
-LineEdit/styles/normal = SubResource( 9 )
+LineEdit/styles/focus = SubResource( 11 )
+LineEdit/styles/normal = SubResource( 12 )
 LineEdit/styles/read_only = null
 MenuButton/colors/font_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 MenuButton/colors/font_color_disabled = Color( 0.101961, 0.101961, 0.101961, 0.301961 )
@@ -243,8 +243,8 @@ MenuButton/styles/focus = SubResource( 2 )
 MenuButton/styles/hover = SubResource( 3 )
 MenuButton/styles/normal = SubResource( 4 )
 MenuButton/styles/pressed = SubResource( 5 )
-Panel/styles/panel = SubResource( 10 )
-PanelContainer/styles/panel = SubResource( 10 )
+Panel/styles/panel = SubResource( 13 )
+PanelContainer/styles/panel = SubResource( 13 )
 PopupMenu/colors/font_color = Color( 0, 0, 0, 0.75 )
 PopupMenu/colors/font_color_accel = Color( 0, 0, 0, 0.803922 )
 PopupMenu/colors/font_color_disabled = Color( 0, 0, 0, 0.501961 )
@@ -257,10 +257,10 @@ PopupMenu/icons/radio_checked = null
 PopupMenu/icons/radio_unchecked = null
 PopupMenu/icons/submenu = null
 PopupMenu/icons/unchecked = null
-PopupMenu/styles/hover = SubResource( 11 )
+PopupMenu/styles/hover = SubResource( 14 )
 PopupMenu/styles/labeled_separator_left = null
 PopupMenu/styles/labeled_separator_right = null
-PopupMenu/styles/panel = SubResource( 12 )
+PopupMenu/styles/panel = SubResource( 15 )
 PopupMenu/styles/panel_disabled = null
 PopupMenu/styles/separator = null
 Tabs/colors/font_color_bg = Color( 0.101961, 0.101961, 0.101961, 0.501961 )
@@ -279,9 +279,9 @@ Tabs/icons/increment_highlight = null
 Tabs/styles/button = null
 Tabs/styles/button_pressed = null
 Tabs/styles/panel = null
-Tabs/styles/tab_bg = SubResource( 13 )
-Tabs/styles/tab_disabled = SubResource( 14 )
-Tabs/styles/tab_fg = SubResource( 15 )
+Tabs/styles/tab_bg = SubResource( 16 )
+Tabs/styles/tab_disabled = SubResource( 17 )
+Tabs/styles/tab_fg = SubResource( 18 )
 TooltipLabel/colors/font_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 TooltipLabel/constants/shadow_offset_x = 0
@@ -312,8 +312,8 @@ Tree/icons/checked = null
 Tree/icons/select_arrow = null
 Tree/icons/unchecked = null
 Tree/icons/updown = null
-Tree/styles/bg = SubResource( 16 )
-Tree/styles/bg_focus = SubResource( 16 )
+Tree/styles/bg = SubResource( 9 )
+Tree/styles/bg_focus = SubResource( 9 )
 Tree/styles/button_pressed = null
 Tree/styles/cursor = null
 Tree/styles/cursor_unfocused = null
@@ -333,4 +333,4 @@ WindowDialog/constants/title_height = 20
 WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
-WindowDialog/styles/panel = SubResource( 17 )
+WindowDialog/styles/panel = SubResource( 19 )

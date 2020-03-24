@@ -1,6 +1,6 @@
 extends Tabs
 
-const Map = preload("res://src/resources/Map.gd")
+const Map = preload("../AreaDisplay/Map.gd")
 
 func _ready():
 

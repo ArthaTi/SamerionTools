@@ -23,7 +23,7 @@ func input(_text = "") -> void:
 	preview.height = $Wrapper/Tile/Height.value
 
 	# Update textures
-	preview.generate_variants(0)
+	preview.generate_variants()
 
 	# Update tile preview
 	$Wrapper/Tile/Preview.texture = preview.texture

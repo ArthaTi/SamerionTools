@@ -1,6 +1,6 @@
 extends Node
 
-const Map = preload("res://src/resources/Map.gd")
+const Map = preload("../AreaDisplay/Map.gd")
 
 var open_maps: Array = []
 var current_map: Map setget switch_to_map
