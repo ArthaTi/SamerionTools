@@ -1,5 +1,7 @@
 extends Resource
 
+var name := ""
+var coords := {}
 var location := ""
 var changed := false
 var variant_seed := randi()

@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func open_pack_manager() -> void:
 
-	var pack_manager = $"../../../../PackManager"
+	var pack_manager = EditorApi.ui.pack_manager
 
 	pack_manager.show()
 	pack_manager.grab_focus()

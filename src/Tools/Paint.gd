@@ -34,12 +34,6 @@ func _process(delta: float) -> void:
 	# Change preview_cell visiblity based on that
 	preview_cell.visible = active
 
-	prints(
-		$"/root/Editor".get_global_mouse_position()
-		/ preview_cell.target_size
-		+ Vector2(0, preview_cell.height / 2)
-	)
-
 	# Set preview_cell position
 	preview_cell.map_position = Cell.transform_position(
 		(

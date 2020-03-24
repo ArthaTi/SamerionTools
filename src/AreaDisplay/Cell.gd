@@ -11,8 +11,6 @@ const neighbor_positions = [
 var type: String
 var map_position: Vector2 setget set_map_position
 var height: float = 1 setget set_height
-var variant: int
-var decoration: int
 var variant_seed = 0;
 
 var object: String
@@ -21,6 +19,7 @@ var objectSpawner: String
 var height_label: Label
 var side: Sprite
 var side_repeat: Sprite
+var decoration: Sprite
 
 func _init(type: String, variantSeed: int) -> void:
 
@@ -30,18 +29,6 @@ func _init(type: String, variantSeed: int) -> void:
 	# Assign properties
 	self.type = type
 	self.variant_seed = variantSeed
-
-	# Add the height label
-	height_label = Label.new()
-	height_label.name = "HeightLabel"
-	height_label.rect_size = Vector2(target_size, target_size)
-	height_label.hide()
-	height_label.align = Label.ALIGN_CENTER
-	height_label.valign = Label.VALIGN_CENTER
-	height_label.set("custom_colors/font_color", Color.white)
-	height_label.set("custom_colors/font_color_shadow", Color(0, 0, 0, 0.5))
-	height_label.set("custom_constants/shadow_as_outline", true)
-	add_child(height_label)
 
 	# Add the Side subnode
 	side = Sprite.new()
@@ -54,6 +41,24 @@ func _init(type: String, variantSeed: int) -> void:
 	side_repeat.name = "SideRepeat"
 	side_repeat.centered = false
 	add_child(side_repeat)
+
+	# Add the Decoration subnode
+	decoration = Sprite.new()
+	decoration.name = "Decoration"
+	decoration.centered = false
+	add_child(decoration)
+
+	# Add the height label
+	height_label = Label.new()
+	height_label.name = "HeightLabel"
+	height_label.rect_size = Vector2(target_size, target_size)
+	height_label.hide()
+	height_label.align = Label.ALIGN_CENTER
+	height_label.valign = Label.VALIGN_CENTER
+	height_label.set("custom_colors/font_color", Color.white)
+	height_label.set("custom_colors/font_color_shadow", Color(0, 0, 0, 0.5))
+	height_label.set("custom_constants/shadow_as_outline", true)
+	add_child(height_label)
 
 # When assigned to a tree
 func _ready() -> void:
@@ -302,3 +307,8 @@ func generate_variants(_stupid_python=true):
 
 	# Update the side
 	update_side()
+
+	# Load the decoration
+	var decorationTexture = PackLoader.load_tile(type, "decoration", variantSeed + 2)
+	decoration.texture = decorationTexture
+	decoration.position = -(decorationTexture.get_size() - texture.get_size()) / 2

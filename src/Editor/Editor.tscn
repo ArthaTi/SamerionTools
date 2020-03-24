@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/Editor/Menu.gd" type="Script" id=1]
 [ext_resource path="res://src/Editor/Tabs.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/Editor/PackManager.gd" type="Script" id=11]
 [ext_resource path="res://src/Editor/AvailableTiles.gd" type="Script" id=12]
 [ext_resource path="res://src/Editor/CameraRotation.gd" type="Script" id=13]
+[ext_resource path="res://src/Editor/UI.gd" type="Script" id=14]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -37,6 +38,18 @@ Button/styles/hover = SubResource( 3 )
 Button/styles/normal = SubResource( 4 )
 Button/styles/pressed = SubResource( 5 )
 
+[sub_resource type="InputEventKey" id=7]
+scancode = 81
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[sub_resource type="InputEventKey" id=9]
+scancode = 69
+
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 9 )
+
 [node name="Editor" type="Node2D"]
 
 [node name="AreaDisplay" parent="." instance=ExtResource( 4 )]
@@ -46,6 +59,7 @@ z_index = 1
 script = ExtResource( 7 )
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 14 )
 
 [node name="Wrapper" type="VBoxContainer" parent="UI"]
 anchor_right = 1.0
@@ -319,6 +333,7 @@ script = ExtResource( 13 )
 [node name="Left" type="Button" parent="UI/Wrapper/Menus/Right/CameraRotation/Wrapper/Rotation"]
 margin_right = 47.0
 margin_bottom = 24.0
+shortcut = SubResource( 8 )
 text = "-90°"
 
 [node name="Label" type="Label" parent="UI/Wrapper/Menus/Right/CameraRotation/Wrapper/Rotation"]
@@ -335,6 +350,7 @@ align = 1
 margin_left = 95.0
 margin_right = 145.0
 margin_bottom = 24.0
+shortcut = SubResource( 10 )
 text = "+90°"
 
 [node name="Status bar" type="PanelContainer" parent="UI/Wrapper"]

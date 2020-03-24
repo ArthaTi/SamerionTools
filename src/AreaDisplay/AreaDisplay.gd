@@ -4,7 +4,6 @@ const Map = preload("Map.gd")
 const Cell = preload("Cell.gd")
 
 var map: Map setget set_map
-var coords := {}
 var last_id := 0
 var size := Rect2()
 var view_from := 0 setget set_view_from
@@ -25,7 +24,7 @@ func set_map(setMap: Map):
 func get_tile(pos: Vector2):
 
 	# Return the tile
-	return coords[pos] if pos in coords else null
+	return map.coords[pos] if pos in map.coords else null
 
 func set_tile(pos: Vector2, tile: String, height: float = 1) -> Cell:
 
@@ -43,16 +42,16 @@ func set_tile(pos: Vector2, tile: String, height: float = 1) -> Cell:
 func import_cell(cell):
 
 	# If there's already a tile at given position
-	if cell.map_position in coords and coords[cell.map_position]:
+	if cell.map_position in map.coords and map.coords[cell.map_position]:
 
-		var old = coords[cell.map_position]
+		var old = map.coords[cell.map_position]
 
 		# Remove the old cell
 		remove_child(old)
 		old.queue_free()
 
 	# Set the position
-	coords[cell.map_position] = cell
+	map.coords[cell.map_position] = cell
 
 	# Add the new cell
 	add_child(cell)
@@ -66,20 +65,20 @@ func import_cell(cell):
 func reset_cell(pos: Vector2):
 
 	# If there's a tile at this position
-	if pos in coords and coords[pos]:
+	if pos in map.coords and map.coords[pos]:
 
 		# Remove it
-		coords[pos].queue_free()
-		coords.erase(pos)
+		map.coords[pos].queue_free()
+		map.coords.erase(pos)
 
 	# Reset the value
-	coords[pos] = null
+	map.coords[pos] = null
 
 func set_view_from(deg: int):
 
 	view_from = deg
 
-	for cell in coords.values():
+	for cell in map.coords.values():
 
 		if not cell: continue
 
