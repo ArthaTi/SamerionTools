@@ -2,6 +2,10 @@ extends Tabs
 
 const Map = preload("../AreaDisplay/Map.gd")
 
+var last_id = 0
+var old_id
+var selection_ids = {}
+
 func _ready():
 
 	# Load current tabs
@@ -26,12 +30,35 @@ func tab_name(map: Map):
 
 func _map_opened(map: Map):
 
+	selection_ids[map] = last_id
+	last_id += 1
+
 	add_tab(tab_name(map))
 	map.connect("changed_saved_state", self, "_changed_saved_state", [get_tab_count()-1, map])
 
 func _map_switched(map: Map):
 
 	current_tab = MapManager.open_maps.find(map)
+
+	var new_id = selection_ids[map]
+
+	# Remove selection
+	for item in get_tree().get_nodes_in_group("selected"):
+
+		item.remove_from_group("selected")
+		item.add_to_group("selected-inactive-%s" % old_id)
+
+	# Restore new map selection
+	if old_id != null:
+
+		var group = "selected-inactive-%s" % new_id
+
+		for item in get_tree().get_nodes_in_group(group):
+
+			item.remove_from_group(group)
+			item.add_to_group("selected")
+
+	old_id = new_id
 
 	OS.set_window_title(
 		tab_name(map)

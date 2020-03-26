@@ -79,6 +79,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# As long as this cell is still in the tree
 	if get_parent() == null: return
 
+	# As long as the map is active
+	if EditorApi.area_display.map != get_parent(): return
+
 	# Check if the event is in the bounding box of this cell
 	if get_rect().has_point(get_global_mouse_position()):
 
