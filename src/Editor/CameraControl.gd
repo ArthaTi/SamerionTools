@@ -87,8 +87,7 @@ func focused() -> bool:
 
 func recentre():
 
-	var rect = $"/root/Editor/AreaDisplay".size
-	position = (rect.end + rect.position) * Cell.target_size / 2
+	position = $"/root/Editor/AreaDisplay".map.center_position()
 
 func set_zoom(value: float):
 

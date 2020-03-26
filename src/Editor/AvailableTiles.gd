@@ -4,14 +4,8 @@ func _ready() -> void:
 
 	$Packs.connect("pressed", self, "open_pack_manager")
 
-	PackLoader.connect("list_changed", self, "list_changed")
-	PackLoader.connect("pack_loaded", self, "load_pack")
-
-	# Load packs
-	list_changed()
-	for pack in PackLoader.packs:
-
-		load_pack(pack)
+	PackLoader.connect("list_updated", self, "_list_updated")
+	_list_updated()
 
 func open_pack_manager() -> void:
 
@@ -20,32 +14,24 @@ func open_pack_manager() -> void:
 	pack_manager.show()
 	pack_manager.grab_focus()
 
-func list_changed(_path = ""):
-
-	var tiles = $ScrollContainer/Tile
-
-	for child in tiles.get_children():
-
-		tiles.remove_child(child)
-
-func load_pack(path: String):
+func _list_updated():
 
 	# Get the tile list
 	var tile_list = $ScrollContainer/Tile
 
+	# Clear the list
+	for tile in tile_list.get_children():
+
+		tile.queue_free()
+
 	# List tiles in the pack
-	for tile in PackLoader.list_tiles(path):
+	for tile in PackLoader.list_tiles():
 
-		# Load the texture
-		var texture = PackLoader.load_tile(tile, "tile", 0)
+		# If the tile is new
+		if not tile_list.has_node(tile):
 
-		# If the tile was already loaded
-		if tile_list.has_node(tile):
-
-			# Replace the texture
-			tile_list.get_node(tile).icon = texture
-
-		else:
+			# Load the texture
+			var texture = PackLoader.load_tile(tile, "tile", 0)
 
 			# Create new texture rect
 			var rect := Button.new()

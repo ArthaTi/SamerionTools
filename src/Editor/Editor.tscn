@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/Editor/Menu.gd" type="Script" id=1]
 [ext_resource path="res://src/Editor/Tabs.gd" type="Script" id=2]
@@ -14,6 +14,14 @@
 [ext_resource path="res://src/Editor/AvailableTiles.gd" type="Script" id=12]
 [ext_resource path="res://src/Editor/CameraRotation.gd" type="Script" id=13]
 [ext_resource path="res://src/Editor/UI.gd" type="Script" id=14]
+[ext_resource path="res://src/Editor/MapSettings.gd" type="Script" id=15]
+
+[sub_resource type="InputEventKey" id=11]
+alt = true
+scancode = 79
+
+[sub_resource type="ShortCut" id=12]
+shortcut = SubResource( 11 )
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -55,7 +63,7 @@ shortcut = SubResource( 9 )
 [node name="AreaDisplay" parent="." instance=ExtResource( 4 )]
 
 [node name="Selection" type="Node2D" parent="."]
-z_index = 1
+z_index = 100
 script = ExtResource( 7 )
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -92,6 +100,7 @@ margin_bottom = 34.0
 margin_right = 71.0
 margin_bottom = 24.0
 focus_mode = 2
+shortcut = SubResource( 12 )
 text = "Options"
 flat = false
 script = ExtResource( 1 )
@@ -407,6 +416,7 @@ margin_bottom = 24.0
 text = "Recentre"
 
 [node name="PackManager" type="WindowDialog" parent="UI"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -475,31 +485,19 @@ margin_bottom = 89.0
 margin_top = 93.0
 margin_right = 165.0
 margin_bottom = 117.0
-text = "Add"
-
-[node name="Separator" type="HSeparator" parent="UI/PackManager/Split/Buttons"]
-margin_top = 121.0
-margin_right = 165.0
-margin_bottom = 136.0
-
-[node name="Edit" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_top = 140.0
-margin_right = 165.0
-margin_bottom = 164.0
-disabled = true
-text = "Edit"
+text = "Add pack"
 
 [node name="Toggle" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_top = 168.0
+margin_top = 121.0
 margin_right = 165.0
-margin_bottom = 192.0
+margin_bottom = 145.0
 disabled = true
 text = "Disable"
 
 [node name="Remove" type="Button" parent="UI/PackManager/Split/Buttons"]
-margin_top = 196.0
+margin_top = 149.0
 margin_right = 165.0
-margin_bottom = 220.0
+margin_bottom = 173.0
 disabled = true
 text = "Remove"
 
@@ -507,6 +505,7 @@ text = "Remove"
 margin_left = 177.0
 margin_right = 390.0
 margin_bottom = 290.0
+select_mode = 1
 allow_reselect = true
 
 [node name="FileDialog" type="FileDialog" parent="UI"]
@@ -542,6 +541,116 @@ theme = ExtResource( 10 )
 window_title = "Warnings"
 resizable = true
 dialog_autowrap = true
+
+[node name="MapSettings" type="WindowDialog" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 350, 300 )
+theme = ExtResource( 10 )
+window_title = "Map settings"
+resizable = true
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wrapper" type="GridContainer" parent="UI/MapSettings"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+custom_constants/hseparation = 10
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IDLabel" type="Label" parent="UI/MapSettings/Wrapper"]
+margin_right = 79.0
+margin_bottom = 14.0
+text = "Area ID"
+
+[node name="ID" type="LineEdit" parent="UI/MapSettings/Wrapper"]
+margin_left = 89.0
+margin_right = 340.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="UI/MapSettings/Wrapper"]
+margin_top = 19.0
+margin_right = 79.0
+margin_bottom = 33.0
+text = "Area name"
+
+[node name="Name" type="LineEdit" parent="UI/MapSettings/Wrapper"]
+margin_left = 89.0
+margin_top = 19.0
+margin_right = 340.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+
+[node name="VariantSeedLabel" type="Label" parent="UI/MapSettings/Wrapper"]
+margin_top = 43.0
+margin_right = 79.0
+margin_bottom = 57.0
+text = "Variant seed"
+
+[node name="VariantSeed" type="HBoxContainer" parent="UI/MapSettings/Wrapper"]
+margin_left = 89.0
+margin_top = 38.0
+margin_right = 340.0
+margin_bottom = 62.0
+size_flags_horizontal = 3
+
+[node name="Value" type="SpinBox" parent="UI/MapSettings/Wrapper/VariantSeed"]
+margin_right = 156.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+allow_greater = true
+allow_lesser = true
+
+[node name="Randomize" type="Button" parent="UI/MapSettings/Wrapper/VariantSeed"]
+margin_left = 160.0
+margin_right = 251.0
+margin_bottom = 24.0
+text = "Randomize"
+
+[node name="WarningLabel" type="Label" parent="UI/MapSettings/Wrapper"]
+margin_top = 248.0
+margin_right = 79.0
+margin_bottom = 262.0
+size_flags_vertical = 8
+
+[node name="Warning" type="Label" parent="UI/MapSettings/Wrapper"]
+margin_left = 89.0
+margin_top = 248.0
+margin_right = 340.0
+margin_bottom = 262.0
+size_flags_horizontal = 3
+size_flags_vertical = 10
+autowrap = true
+
+[node name="CloseLabel" type="Label" parent="UI/MapSettings/Wrapper"]
+margin_top = 271.0
+margin_right = 79.0
+margin_bottom = 285.0
+
+[node name="Close" type="Button" parent="UI/MapSettings/Wrapper"]
+margin_left = 285.0
+margin_top = 266.0
+margin_right = 340.0
+margin_bottom = 290.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Close"
 
 [node name="CameraControl" type="Node2D" parent="."]
 position = Vector2( 682, 400 )

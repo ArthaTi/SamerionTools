@@ -4,7 +4,7 @@ var pack_list = "user://lists/default.json" setget load_list
 var packs := []
 
 signal list_changed(path)
-signal pack_loaded(path)
+signal list_updated()
 
 func _ready() -> void:
 
@@ -31,22 +31,25 @@ func _process(delta: float) -> void:
 
 		EditorApi.status_bar.remove_warning("missing-tile")
 
+func get_packs() -> Array:
+
+	var list = []
+	for item in packs:
+
+		if item.begins_with("(disabled)"): continue
+		list.append(item)
+
+	return list
+
 func load_list(path: String = pack_list) -> bool:
-
-	# Assign the pack list
-	pack_list = path
-	emit_signal("list_changed", pack_list)
-
-	# Clear pack list
-	packs.clear()
 
 	var file = File.new()
 
 	# Check if the file exists
-	if not file.file_exists(pack_list): return false
+	if not file.file_exists(path): return false
 
 	# Open the file
-	file.open(pack_list, File.READ)
+	file.open(path, File.READ)
 
 	# Read the data
 	var text = file.get_as_text()
@@ -55,12 +58,13 @@ func load_list(path: String = pack_list) -> bool:
 	file.close()
 
 	# Parse the content
-	var content = JSON.parse(text).result
+	packs = JSON.parse(text).result
 
-	# Get each item
-	for item in content:
+	# Assign the pack list
+	pack_list = path
 
-		add_pack(item)
+	emit_signal("list_changed", pack_list)
+	emit_signal("list_updated")
 
 	return true
 
@@ -76,17 +80,10 @@ func save_list() -> void:
 	# Close the file
 	file.close()
 
-func add_pack(location: String) -> void:
+func update_list() -> void:
 
-	# Add the pack to list
-	packs.append(location)
-
-	# Reload missing textures
-	for node in get_tree().get_nodes_in_group("missing"):
-		node.generate_variants()
-
-	# Emit a signal
-	emit_signal("pack_loaded", location)
+	emit_signal("list_updated")
+	save_list()
 
 func list_tiles(from_pack = null) -> Array:
 
@@ -96,9 +93,9 @@ func list_tiles(from_pack = null) -> Array:
 		var result = []
 
 		# List tiles from all packs
-		for pack in packs:
+		for pack in get_packs():
 
-			result += list_tiles(result)
+			result += list_tiles(pack)
 
 		return result
 
@@ -137,7 +134,7 @@ func list_tiles(from_pack = null) -> Array:
 func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 
 	# Search for the tile in the packs
-	for pack in packs:
+	for pack in get_packs():
 
 		# Get the directory
 		var dir := Directory.new()

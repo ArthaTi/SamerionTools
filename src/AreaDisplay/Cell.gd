@@ -65,7 +65,7 @@ func _ready() -> void:
 
 	update_position()
 
-	PackLoader.connect("pack_loaded", self, "generate_variants")
+	PackLoader.connect("list_updated", self, "regenerate_variants")
 
 	# Generate variants
 	generate_variants()
@@ -81,6 +81,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# Check if the event is in the bounding box of this cell
 	if get_rect().has_point(get_global_mouse_position()):
+
+		var debugInfo = name
 
 		# Call the event
 		EditorApi.tools.input(event, map_position)
@@ -118,13 +120,13 @@ func _draw():
 			texture_size * Vector2(
 				int(relative_pos.x == +1),
 				int(relative_pos.y == +1)
-			),
+			) * 0.999,
 
 			# Get the .to value: 0 → 1, inherit otherwise (only -1 gives 0)
 			texture_size * Vector2(
 				int(relative_pos.x != -1),
 				int(relative_pos.y != -1)
-			),
+			) * 0.999,
 
 			# Color: plain blue
 			Color(0, 0, 1)
@@ -156,7 +158,7 @@ func select(value := true):
 
 func relative_tile(relative_pos: Vector2):
 
-	var pos = map_position + relative_pos
+	var pos := map_position + relative_pos
 	return get_parent().get_tile(pos)
 
 func set_map_position(pos: Vector2):
@@ -166,6 +168,16 @@ func set_map_position(pos: Vector2):
 
 	# Set actual position
 	update_position()
+
+	# If assigned to an area
+	if get_parent():
+
+		# Generate variants
+		generate_variants()
+
+		# Update the side of the cell in behind
+		var backTile = get_parent().get_tile(map_position - Vector2(0, 1))
+		if backTile: backTile.update_side()
 
 func set_height(val: float):
 
@@ -189,20 +201,13 @@ static func transform_position(v: Vector2, by: int):
 
 func update_position():
 
-	var transformed_position = transform_position(map_position, get_parent().view_from if get_parent() else 0)
+	var transformed_position = transform_position(
+		map_position,
+		EditorApi.area_display.view_from if get_parent() else 0
+	)
 
 	position = target_size * (transformed_position - Vector2(0, height/2))
 	z_index = transformed_position.y
-
-	# If assigned to an area
-	if get_parent():
-
-		# Generate variants
-		generate_variants()
-
-		# Update the side of the cell in behind
-		var backTile = get_parent().get_tile(map_position - Vector2(0, 1))
-		if backTile: backTile.update_side()
 
 func update_side():
 
@@ -245,13 +250,24 @@ func is_pressed():
 
 	return Input.is_mouse_button_pressed(BUTTON_LEFT) and get_rect().has_point(get_local_mouse_position())
 
+func regenerate_variants(_stupid_python=true):
+
+	# Reset textures
+	texture = null
+	side.texture = null
+	side_repeat.texture = null
+	decoration.texture = null
+
+	# Generate variants from scratch
+	generate_variants()
+
 func generate_variants(_stupid_python=true):
 
 	var AreaDisplay := load("res://src/AreaDisplay/AreaDisplay.gd") as Script
 
 	# Get display size
 	var parent = get_parent()
-	var size = parent.size if AreaDisplay.instance_has(parent) else Rect2()
+	var size = parent.map.size if AreaDisplay.instance_has(parent) else Rect2()
 
 	# Get the seed
 	var variantSeed = variant_seed + (map_position.y+size.position.y)*82 + (map_position.x + size.position.x)*5

@@ -74,7 +74,7 @@ func input_select(event: InputEventMouseButton, pos: Vector2):
 				if event.shift and not event.control: clear_selection()
 
 				# Select the rect
-				for cell in CellIterator.new(EditorApi.area_display, Rect2(min_coords, max_coords - min_coords)):
+				for cell in CellIterator.new(EditorApi.area_display.map, Rect2(min_coords, max_coords - min_coords)):
 
 					# If shift is pressed, select the cell
 					if event.shift: cell.select()

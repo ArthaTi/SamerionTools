@@ -37,10 +37,13 @@ func get_map(num: int):
 # Accepts tab number
 func switch_to_map(map: Map):
 
+	# Save and restore camera position
+	if current_map: current_map.camera_position = $"/root/Editor/CameraControl".position
+	$"/root/Editor/CameraControl".position = map.camera_position
+
 	# Set as the current map
 	current_map = map
 	emit_signal("map_switched", map)
-	$"/root/Editor/CameraControl".position = map.camera_position
 
 	# Display the map
 	$"/root/Editor/AreaDisplay".map = map

@@ -17,12 +17,10 @@ func _ready():
 	preview_cell.name = "PreviewCell"
 	preview_cell.modulate = Color(0, 0.53, 0.67, 0.9)
 	preview_cell.height_label.show()
-	EditorApi.area_display.add_child(preview_cell)
 	EditorApi.area_display.connect("map_changed", self, "map_changed")
-	preview_cell.set_process_unhandled_input(false)
 
 	# Load packs
-	PackLoader.connect("pack_loaded", self, "pack_loaded")
+	PackLoader.connect("list_updated", self, "_list_updated")
 
 	map_changed(EditorApi.area_display.map)
 
@@ -41,7 +39,7 @@ func _process(delta: float) -> void:
 			/ preview_cell.target_size
 			+ Vector2(0, preview_cell.height / 2)
 		).floor(),
-		posmod(4-preview_cell.get_parent().view_from, 4)
+		posmod(4-EditorApi.area_display.view_from, 4)
 	)
 	preview_cell.z_index += 1
 	preview_cell.generate_variants()
@@ -64,7 +62,7 @@ func _process(delta: float) -> void:
 
 		# Enable height labels on neighbor tiles
 		for cell in CellIterator.new(
-			EditorApi.area_display,
+			preview_cell.get_parent(),
 			Rect2(preview_cell.map_position - Vector2(1, 1), Vector2(2, 2))
 		):
 
@@ -80,6 +78,9 @@ func _process(delta: float) -> void:
 			and not Input.is_key_pressed(KEY_SHIFT) and not Input.is_key_pressed(KEY_CONTROL)
 		):
 
+			# Clear selection
+			clear_selection()
+
 			# Painting
 			if not erase:
 
@@ -90,7 +91,7 @@ func _process(delta: float) -> void:
 			else:
 
 				# Remove the tile
-				EditorApi.area_display.reset_cell(preview_cell.map_position)
+				preview_cell.get_parent().reset_cell(preview_cell.map_position)
 
 	if not active: return
 
@@ -143,21 +144,30 @@ func paint_tile(pos: Vector2) -> Cell:
 	if not preview_cell.type: return null
 
 	# Place the tile
-	return EditorApi.area_display.set_tile(
+	return preview_cell.get_parent().set_tile(
 		pos,
 		preview_cell.type,
 		preview_cell.height
 	)
 
-func pack_loaded(_path: String):
+func _list_updated():
 
+	preview_cell.generate_variants()
 	emit_signal("preview_cell_updated")
 
-func map_changed(map):
+func map_changed(map: Node):
 
+	# Update preview variants
 	preview_cell.variant_seed = (map as Map).variant_seed
 	preview_cell.generate_variants()
-	prints("seed:", (map as Map).variant_seed)
+
+	# Move preview to the map
+	if preview_cell.get_parent(): preview_cell.get_parent().remove_child(preview_cell)
+	map.add_child(preview_cell)
+	map.move_child(preview_cell, 0)
+
+	# Disable input processing
+	preview_cell.set_process_unhandled_input(false)
 
 func input(event: InputEventMouseButton, pos: Vector2):
 

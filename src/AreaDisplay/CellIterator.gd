@@ -1,14 +1,18 @@
-const AreaDisplay = preload("res://src/AreaDisplay/AreaDisplay.gd")
-const Cell = preload("res://src/AreaDisplay/Cell.gd")
+extends Resource
 
-var area: AreaDisplay
+const Map = preload("Map.gd")
+const Cell = preload("Cell.gd")
+
+var map: Map
 var rect: Rect2
 var current: Vector2
+var skip_nulls: bool
 
-func _init(area: AreaDisplay, rect: Rect2):
+func _init(map: Map, rect: Rect2, skip_nulls := true):
 
-	self.area = area
+	self.map = map
 	self.rect = rect
+	self.skip_nulls = skip_nulls
 
 func in_progress():
 
@@ -20,13 +24,13 @@ func _iter_init(_arg):
 	current = rect.position
 
 	# Check for nulls at the start
-	_iter_next("", false)
+	if skip_nulls: _iter_next("", false)
 
 	return in_progress()
 
 func _iter_next(_arg, start=true):
 
-	while start or area.get_tile(current) == null:
+	while start or (skip_nulls and _iter_get() == null):
 
 		start = false
 
@@ -49,6 +53,6 @@ func _iter_next(_arg, start=true):
 
 	return in_progress()
 
-func _iter_get(_arg) -> Cell:
+func _iter_get(_arg = null) -> Cell:
 
-	return area.get_tile(current)
+	return map.coords.get(current)
