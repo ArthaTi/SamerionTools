@@ -166,6 +166,9 @@ func load_tile(tile: String, type: String, variantSeed: int) -> ImageTexture:
 		var rng := RandomNumberGenerator.new()
 		rng.seed = variantSeed
 
+		# No textures found, fail
+		if not paths: return null
+
 		# Attempt to load set texture from the pack
 		var texture = _load_texture("%s/cells/%s/%s/%s" % [
 			pack, tile, type,

@@ -308,21 +308,23 @@ func generate_variants(_stupid_python=true):
 	side.texture = sideTexture
 	side.position = Vector2(0, target_size) / scale
 
-	# Crop the image
-	var textureSize = sideTexture.get_size()
-	var textureRatio = textureSize.y / textureSize.x
-	var image: Image = sideTexture.get_data().get_rect(Rect2(
-		0, textureSize.y - textureSize.x,
-		textureSize.x, textureSize.x
-	))
-	var croppedTexture := ImageTexture.new()
-	croppedTexture.create_from_image(image)
-	croppedTexture.flags = side.texture.flags | Texture.FLAG_REPEAT
+	if sideTexture:
 
-	# Load the sideRepeat texture
-	side_repeat.texture = croppedTexture
-	side_repeat.position = Vector2(0, target_size * (1 + textureRatio)) / scale
-	side_repeat.region_enabled = true
+		# Crop the image
+		var textureSize = sideTexture.get_size()
+		var textureRatio = textureSize.y / textureSize.x
+		var image: Image = sideTexture.get_data().get_rect(Rect2(
+			0, textureSize.y - textureSize.x,
+			textureSize.x, textureSize.x
+		))
+		var croppedTexture := ImageTexture.new()
+		croppedTexture.create_from_image(image)
+		croppedTexture.flags = side.texture.flags | Texture.FLAG_REPEAT
+
+		# Load the sideRepeat texture
+		side_repeat.texture = croppedTexture
+		side_repeat.position = Vector2(0, target_size * (1 + textureRatio)) / scale
+		side_repeat.region_enabled = true
 
 	# Update the side
 	update_side()
@@ -330,4 +332,6 @@ func generate_variants(_stupid_python=true):
 	# Load the decoration
 	var decorationTexture = PackLoader.load_tile(type, "decoration", variantSeed + 2)
 	decoration.texture = decorationTexture
-	decoration.position = -(decorationTexture.get_size() - texture.get_size()) / 2
+
+	if decorationTexture:
+		decoration.position = -(decorationTexture.get_size() - texture.get_size()) / 2
